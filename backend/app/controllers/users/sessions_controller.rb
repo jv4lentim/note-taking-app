@@ -5,9 +5,6 @@ module Users
 
     private
 
-    # Devise 5's default check uses warden.user(run_callbacks: false) which only
-    # reads from the session — useless in a JWT/sessionless API. Override to run
-    # the JWT strategy via authenticate so revoked tokens still get rejected.
     def verify_signed_out_user
       return if warden.authenticate(scope: resource_name)
       respond_to_on_destroy(non_navigational_status: :unauthorized)
