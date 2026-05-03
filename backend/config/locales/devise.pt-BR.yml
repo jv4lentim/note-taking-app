@@ -1,0 +1,31 @@
+pt-BR:
+  devise:
+    failure:
+      already_authenticated: "Você já está autenticado."
+      inactive: "Sua conta ainda não foi ativada."
+      invalid: "%{authentication_keys} ou senha inválidos."
+      locked: "Sua conta está bloqueada."
+      last_attempt: "Você tem mais uma tentativa antes de sua conta ser bloqueada."
+      not_found_in_database: "%{authentication_keys} ou senha inválidos."
+      timeout: "Sua sessão expirou. Por favor, entre novamente."
+      unauthenticated: "Você precisa entrar ou criar uma conta antes de continuar."
+      unconfirmed: "Você precisa confirmar seu e-mail antes de continuar."
+    sessions:
+      signed_in: "Login realizado com sucesso."
+      signed_out: "Logout realizado com sucesso."
+      already_signed_out: "Logout realizado com sucesso."
+    registrations:
+      signed_up: "Conta criada com sucesso."
+      destroyed: "Sua conta foi cancelada."
+    passwords:
+      send_instructions: "Você receberá um e-mail com instruções para redefinir sua senha."
+      updated: "Sua senha foi alterada com sucesso."
+    errors:
+      messages:
+        already_confirmed: "já foi confirmado"
+        expired: "expirou, solicite um novo"
+        not_found: "não encontrado"
+        not_locked: "não estava bloqueado"
+        not_saved:
+          one: "1 erro impediu este %{resource} de ser salvo:"
+          other: "%{count} erros impediram este %{resource} de ser salvo:"

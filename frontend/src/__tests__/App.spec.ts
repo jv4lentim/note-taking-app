@@ -1,11 +1,19 @@
-import { describe, it, expect } from 'vitest'
+import { describe, it, expect } from "vitest";
+import { mount } from "@vue/test-utils";
+import { createRouter, createWebHashHistory } from "vue-router";
+import { createPinia } from "pinia";
+import App from "../App.vue";
 
-import { mount } from '@vue/test-utils'
-import App from '../App.vue'
+const router = createRouter({
+  history: createWebHashHistory(),
+  routes: [{ path: "/", component: { template: "<div />" } }],
+});
 
-describe('App', () => {
-  it('mounts renders properly', () => {
-    const wrapper = mount(App)
-    expect(wrapper.text()).toContain('You did it!')
-  })
-})
+describe("App", () => {
+  it("mounts without errors", () => {
+    const wrapper = mount(App, {
+      global: { plugins: [router, createPinia()] },
+    });
+    expect(wrapper.exists()).toBe(true);
+  });
+});

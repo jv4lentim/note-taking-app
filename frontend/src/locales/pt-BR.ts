@@ -1,0 +1,25 @@
+export default {
+  auth: {
+    login: "Entrar",
+    register: "Criar conta",
+    email: "E-mail",
+    password: "Senha",
+    passwordConfirmation: "Confirmar senha",
+    emailPlaceholder: "Digite seu e-mail",
+    passwordPlaceholder: "Digite sua senha",
+    passwordConfirmationPlaceholder: "Confirme sua senha",
+    noAccount: "Não tem uma conta?",
+    hasAccount: "Já tem uma conta?",
+    logout: "Sair",
+    loading: "Aguarde...",
+    errors: {
+      invalidCredentials: "E-mail ou senha inválidos.",
+      emailRequired: "E-mail é obrigatório.",
+      emailInvalid: "Informe um e-mail válido.",
+      passwordRequired: "Senha é obrigatória.",
+      passwordMin: "A senha deve ter no mínimo 8 caracteres.",
+      passwordConfirmationMismatch: "As senhas não coincidem.",
+      generic: "Ocorreu um erro. Tente novamente.",
+    },
+  },
+}
