@@ -1,4 +1,28 @@
 export default {
+  notes: {
+    sectionTitle: "Nova anotação",
+    listTitle: "Anotações",
+    titleLabel: "Título",
+    contentLabel: "Conteúdo",
+    titlePlaceholder: "Digite o título",
+    contentPlaceholder: "Digite o conteúdo (opcional)",
+    save: "Salvar",
+    saving: "Salvando...",
+    loading: "Carregando...",
+    empty: "Nenhuma anotação ainda.",
+    pagination: {
+      previous: "Anterior",
+      next: "Próxima",
+      page: "Página {page} de {pages}",
+    },
+    errors: {
+      titleRequired: "Título é obrigatório.",
+      titleMax: "Título pode ter no máximo 200 caracteres.",
+      contentMax: "Conteúdo pode ter no máximo 10.000 caracteres.",
+      loadFailed: "Não foi possível carregar as anotações.",
+      saveFailed: "Não foi possível salvar a anotação.",
+    },
+  },
   auth: {
     login: "Entrar",
     register: "Criar conta",

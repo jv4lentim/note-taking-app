@@ -1,6 +1,9 @@
 pt-BR:
   activerecord:
     attributes:
+      note:
+        title: "Título"
+        content: "Conteúdo"
       user:
         email: "E-mail"
         password: "Senha"
@@ -14,6 +17,13 @@ pt-BR:
         too_long: "é muito longo (máximo: %{count} caracteres)"
         confirmation: "não é igual a Senha"
       models:
+        note:
+          attributes:
+            title:
+              blank: "não pode ficar em branco"
+              too_long: "é muito longo (máximo: %{count} caracteres)"
+            content:
+              too_long: "é muito longo (máximo: %{count} caracteres)"
         user:
           attributes:
             email:

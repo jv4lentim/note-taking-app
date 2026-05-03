@@ -2,6 +2,8 @@
 import { useRouter } from "vue-router";
 import { useI18n } from "vue-i18n";
 import { useAuthStore } from "@/stores/auth";
+import NoteForm from "@/components/NoteForm.vue";
+import NoteList from "@/components/NoteList.vue";
 
 const { t } = useI18n();
 const router = useRouter();
@@ -9,7 +11,7 @@ const auth = useAuthStore();
 
 async function handleLogout() {
   await auth.logout();
-  router.push("/login");
+  router.push({ name: "login" });
 }
 </script>
 
@@ -20,6 +22,9 @@ async function handleLogout() {
         <span class="user-email">{{ auth.user?.email }}</span>
         <button class="btn-logout" @click="handleLogout">{{ t("auth.logout") }}</button>
       </div>
+      <NoteForm />
+      <hr class="divider" />
+      <NoteList />
     </div>
   </div>
 </template>
@@ -59,5 +64,11 @@ async function handleLogout() {
   font-size: 0.9rem;
   color: #374151;
   cursor: pointer;
+}
+
+.divider {
+  border: none;
+  border-top: 1px solid #d1d5db;
+  margin: 2rem 0;
 }
 </style>

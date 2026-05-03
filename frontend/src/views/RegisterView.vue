@@ -6,7 +6,6 @@ import axios from "axios";
 import { useAuthStore } from "@/stores/auth";
 import { useAuthValidation } from "@/composables/useAuthValidation";
 import AuthLayout from "@/components/AuthLayout.vue";
-import "@/assets/auth-form.css";
 
 const { t } = useI18n();
 const router = useRouter();
@@ -40,7 +39,7 @@ async function handleSubmit() {
   isLoading.value = true;
   try {
     await auth.register(email.value, password.value, passwordConfirmation.value);
-    router.push("/");
+    router.push({ name: "home" });
   } catch (err) {
     if (axios.isAxiosError(err)) {
       const messages = err.response?.data?.errors as string[] | undefined;

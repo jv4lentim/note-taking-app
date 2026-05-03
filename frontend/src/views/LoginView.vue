@@ -6,7 +6,6 @@ import axios from "axios";
 import { useAuthStore } from "@/stores/auth";
 import { useAuthValidation } from "@/composables/useAuthValidation";
 import AuthLayout from "@/components/AuthLayout.vue";
-import "@/assets/auth-form.css";
 
 const { t } = useI18n();
 const router = useRouter();
@@ -31,7 +30,7 @@ async function handleSubmit() {
   isLoading.value = true;
   try {
     await auth.login(email.value, password.value);
-    router.push("/");
+    router.push({ name: "home" });
   } catch (err) {
     if (axios.isAxiosError(err) && err.response?.status === 401) {
       errorMessage.value = t("auth.errors.invalidCredentials");

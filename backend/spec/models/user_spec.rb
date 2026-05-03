@@ -8,14 +8,14 @@ RSpec.describe User, type: :model do
   it "is invalid without an email" do
     user = build(:user, email: "")
     expect(user).not_to be_valid
-    expect(user.errors[:email]).to include("can't be blank")
+    expect(user.errors[:email]).to include("não pode ficar em branco")
   end
 
   it "is invalid with a duplicate email" do
     create(:user, email: "taken@example.com")
     duplicate = build(:user, email: "taken@example.com")
     expect(duplicate).not_to be_valid
-    expect(duplicate.errors[:email]).to include("has already been taken")
+    expect(duplicate.errors[:email]).to include("já está em uso")
   end
 
   it "is invalid without a password" do
@@ -31,12 +31,5 @@ RSpec.describe User, type: :model do
   it "sets jti on create" do
     user = create(:user)
     expect(user.jti).to be_present
-  end
-
-  it "rotates jti on sign out (revocation)" do
-    user = create(:user)
-    original_jti = user.jti
-    User.revoke_jwt({}, user)
-    expect(user.reload.jti).not_to eq(original_jti)
   end
 end

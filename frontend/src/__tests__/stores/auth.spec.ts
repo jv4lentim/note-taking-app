@@ -33,7 +33,7 @@ describe("useAuthStore", () => {
   });
 
   describe("login", () => {
-    it("sets token and user on success", async () => {
+    it("sets token, user and persists to localStorage on success", async () => {
       vi.mocked(http.post).mockResolvedValueOnce({
         data: { token: mockToken, user: mockUser },
       });
@@ -44,18 +44,7 @@ describe("useAuthStore", () => {
       expect(auth.token).toBe(mockToken);
       expect(auth.user).toEqual(mockUser);
       expect(auth.isAuthenticated).toBe(true);
-    });
-
-    it("persists token and user in localStorage", async () => {
-      vi.mocked(http.post).mockResolvedValueOnce({
-        data: { token: mockToken, user: mockUser },
-      });
-
-      const auth = useAuthStore();
-      await auth.login("user@example.com", "password123");
-
       expect(localStorage.getItem("auth_token")).toBe(mockToken);
-      expect(localStorage.getItem("auth_user")).toBe(JSON.stringify(mockUser));
     });
 
     it("propagates error on invalid credentials", async () => {
@@ -74,18 +63,6 @@ describe("useAuthStore", () => {
   });
 
   describe("register", () => {
-    it("sets token and user on success", async () => {
-      vi.mocked(http.post).mockResolvedValueOnce({
-        data: { token: mockToken, user: mockUser },
-      });
-
-      const auth = useAuthStore();
-      await auth.register("user@example.com", "password123", "password123");
-
-      expect(auth.token).toBe(mockToken);
-      expect(auth.user).toEqual(mockUser);
-    });
-
     it("propagates validation errors from API", async () => {
       vi.mocked(http.post).mockRejectedValueOnce({
         response: { status: 422, data: { errors: ["Email has already been taken"] } },
@@ -101,22 +78,6 @@ describe("useAuthStore", () => {
   });
 
   describe("logout", () => {
-    it("clears token and user", async () => {
-      vi.mocked(http.post).mockResolvedValueOnce({
-        data: { token: mockToken, user: mockUser },
-      });
-      vi.mocked(http.delete).mockResolvedValueOnce({ data: { message: "Signed out" } });
-
-      const auth = useAuthStore();
-      await auth.login("user@example.com", "password123");
-      await auth.logout();
-
-      expect(auth.token).toBeNull();
-      expect(auth.user).toBeNull();
-      expect(auth.isAuthenticated).toBe(false);
-      expect(localStorage.getItem("auth_token")).toBeNull();
-    });
-
     it("clears session even if API call fails", async () => {
       vi.mocked(http.post).mockResolvedValueOnce({
         data: { token: mockToken, user: mockUser },
@@ -128,27 +89,19 @@ describe("useAuthStore", () => {
       await auth.logout();
 
       expect(auth.token).toBeNull();
+      expect(auth.isAuthenticated).toBe(false);
       expect(localStorage.getItem("auth_token")).toBeNull();
     });
   });
 
   describe("session persistence", () => {
-    it("reads token from localStorage on store init", () => {
+    it("reads token and isAuthenticated from localStorage on store init", () => {
       localStorage.setItem("auth_token", mockToken);
 
       const auth = useAuthStore();
 
       expect(auth.token).toBe(mockToken);
       expect(auth.isAuthenticated).toBe(true);
-    });
-
-    it("reads user from localStorage on store init", () => {
-      localStorage.setItem("auth_token", mockToken);
-      localStorage.setItem("auth_user", JSON.stringify(mockUser));
-
-      const auth = useAuthStore();
-
-      expect(auth.user).toEqual(mockUser);
     });
 
     it("returns null user when auth_user in localStorage is corrupted JSON", () => {

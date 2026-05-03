@@ -54,5 +54,11 @@ RSpec.describe "Users::Sessions", type: :request do
 
       expect(response).to have_http_status(:unauthorized)
     end
+
+    it "returns 401 without a token" do
+      delete "/users/sign_out"
+
+      expect(response).to have_http_status(:unauthorized)
+    end
   end
 end
