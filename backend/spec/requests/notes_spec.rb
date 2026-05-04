@@ -56,19 +56,19 @@ RSpec.describe "Notes", type: :request do
       expect(pagination["count"]).to eq(3)
     end
 
-    it "paginates results with limit of 10" do
-      create_list(:note, 12, user: user)
+    it "paginates results with limit of 5" do
+      create_list(:note, 7, user: user)
 
       get "/notes", headers: auth_headers, as: :json
 
       body = response.parsed_body
-      expect(body["notes"].size).to eq(10)
+      expect(body["notes"].size).to eq(5)
       expect(body["pagination"]["pages"]).to eq(2)
       expect(body["pagination"]["next"]).to eq(2)
     end
 
     it "returns the requested page" do
-      create_list(:note, 12, user: user)
+      create_list(:note, 7, user: user)
 
       get "/notes", params: { page: 2 }, headers: auth_headers
 
