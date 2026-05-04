@@ -20,7 +20,7 @@ onMounted(() => notesStore.fetchNotes());
         <div class="py-1">
           <div class="flex gap-2 items-baseline">
             <span class="text-slate-800 font-bold shrink-0">•</span>
-            <span class="font-bold text-slate-800 text-base break-words">{{ note.title }}</span>
+            <span class="font-bold text-slate-800 text-base break-words min-w-0">{{ note.title }}</span>
           </div>
           <p v-if="note.content" class="mt-1 ml-4 mb-0 text-gray-500 text-base whitespace-pre-wrap break-words">{{ note.content }}</p>
         </div>

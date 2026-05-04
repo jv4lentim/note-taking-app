@@ -17,7 +17,7 @@ async function handleLogout() {
 
 <template>
   <div class="min-h-screen bg-white flex justify-center px-6 py-12">
-    <div class="w-full max-w-[720px]">
+    <div class="w-full max-w-[720px] min-w-0">
       <div class="flex justify-end items-center gap-4 mb-8">
         <span class="text-sm text-gray-500">{{ auth.user?.email }}</span>
         <button
