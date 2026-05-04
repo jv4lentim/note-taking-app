@@ -79,6 +79,28 @@ RSpec.describe "Notes", type: :request do
     end
   end
 
+  describe "DELETE /notes/:id" do
+    it "requires authentication" do
+      note = create(:note, user: user)
+      delete "/notes/#{note.id}", as: :json
+      expect(response).to have_http_status(:unauthorized)
+    end
+
+    it "deletes the note and returns 204" do
+      note = create(:note, user: user)
+      expect {
+        delete "/notes/#{note.id}", headers: auth_headers, as: :json
+      }.to change(Note, :count).by(-1)
+      expect(response).to have_http_status(:no_content)
+    end
+
+    it "returns 404 when note belongs to another user" do
+      other_note = create(:note, user: create(:user))
+      delete "/notes/#{other_note.id}", headers: auth_headers, as: :json
+      expect(response).to have_http_status(:not_found)
+    end
+  end
+
   describe "POST /notes" do
     it "requires authentication" do
       post "/notes", params: { note: { title: "Test" } }, as: :json

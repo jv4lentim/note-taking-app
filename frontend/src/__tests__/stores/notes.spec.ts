@@ -6,6 +6,7 @@ vi.mock("@/api/http", () => ({
   default: {
     get: vi.fn<() => Promise<unknown>>(),
     post: vi.fn<() => Promise<unknown>>(),
+    delete: vi.fn<() => Promise<unknown>>(),
     interceptors: {
       request: { use: vi.fn<() => void>() },
       response: { use: vi.fn<() => void>() },
@@ -95,6 +96,52 @@ describe("useNotesStore", () => {
       await expect(store.createNote("", "")).rejects.toMatchObject({
         response: { status: 422 },
       });
+    });
+  });
+
+  describe("deleteNote", () => {
+    it("calls DELETE and refetches the current page", async () => {
+      const remaining = [{ id: 2, title: "Second", content: null, created_at: "" }];
+      vi.mocked(http.delete).mockResolvedValueOnce({});
+      vi.mocked(http.get).mockResolvedValueOnce({
+        data: { notes: remaining, pagination: { ...mockPagination, count: 1 } },
+      });
+
+      const store = useNotesStore();
+      store.notes = [...mockNotes];
+      store.pagination = { ...mockPagination, page: 1 };
+
+      await store.deleteNote(1);
+
+      expect(http.delete).toHaveBeenCalledWith("/notes/1");
+      expect(http.get).toHaveBeenCalledWith("/notes", { params: { page: 1 } });
+      expect(store.notes).toEqual(remaining);
+    });
+
+    it("sets error key and rethrows when DELETE fails", async () => {
+      vi.mocked(http.delete).mockRejectedValueOnce({ response: { status: 404 } });
+
+      const store = useNotesStore();
+      store.notes = [mockNotes[0]];
+      store.pagination = { ...mockPagination };
+
+      await expect(store.deleteNote(1)).rejects.toBeDefined();
+      expect(store.error).toBe("notes.errors.deleteFailed");
+    });
+
+    it("goes to the previous page when deleting the last item on a non-first page", async () => {
+      vi.mocked(http.delete).mockResolvedValueOnce({});
+      vi.mocked(http.get).mockResolvedValueOnce({
+        data: { notes: mockNotes, pagination: { ...mockPagination, page: 1 } },
+      });
+
+      const store = useNotesStore();
+      store.notes = [{ id: 5, title: "Last on page 2", content: null, created_at: "" }];
+      store.pagination = { page: 2, pages: 2, count: 6, next: null, prev: 1 };
+
+      await store.deleteNote(5);
+
+      expect(http.get).toHaveBeenCalledWith("/notes", { params: { page: 1 } });
     });
   });
 });

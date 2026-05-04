@@ -48,5 +48,19 @@ export const useNotesStore = defineStore("notes", () => {
     await fetchNotes(1);
   }
 
-  return { notes, pagination, loading, error, fetchNotes, createNote };
+  async function deleteNote(id: number): Promise<void> {
+    try {
+      await http.delete(`/notes/${id}`);
+      const targetPage =
+        notes.value.length === 1 && pagination.value.prev
+          ? pagination.value.prev
+          : pagination.value.page;
+      await fetchNotes(targetPage);
+    } catch (err) {
+      error.value = "notes.errors.deleteFailed";
+      throw err;
+    }
+  }
+
+  return { notes, pagination, loading, error, fetchNotes, createNote, deleteNote };
 });

@@ -10,6 +10,12 @@ class NotesController < ApplicationController
     }
   end
 
+  def destroy
+    note = current_user.notes.find(params[:id])
+    note.destroy!
+    head :no_content
+  end
+
   def create
     note = current_user.notes.build(note_params)
 

@@ -10,6 +10,7 @@ export default {
     saving: "Salvando...",
     loading: "Carregando...",
     empty: "Nenhuma anotação ainda.",
+    deleteAriaLabel: "Excluir anotação",
     pagination: {
       previous: "Anterior",
       next: "Próxima",
@@ -21,6 +22,7 @@ export default {
       contentMax: "Conteúdo pode ter no máximo 10.000 caracteres.",
       loadFailed: "Não foi possível carregar as anotações.",
       saveFailed: "Não foi possível salvar a anotação.",
+      deleteFailed: "Não foi possível excluir a anotação.",
     },
   },
   auth: {

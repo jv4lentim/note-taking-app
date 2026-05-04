@@ -25,6 +25,7 @@ function mockStore(overrides: object) {
     loading: false,
     error: null,
     fetchNotes: vi.fn(),
+    deleteNote: vi.fn(),
     ...overrides,
   } as ReturnType<typeof useNotesStore>);
 }
@@ -87,7 +88,8 @@ describe("NoteList", () => {
       pagination: { page: 2, pages: 3, count: 11, next: 3, prev: 1 },
     });
     const wrapper = mountList();
-    expect(wrapper.findAll("button")).toHaveLength(2);
+    const paginationButtons = wrapper.findAll('[data-testid="pagination"] button');
+    expect(paginationButtons).toHaveLength(2);
   });
 
   it("disables the previous button on the first page", () => {
@@ -96,7 +98,19 @@ describe("NoteList", () => {
       pagination: { page: 1, pages: 2, count: 6, next: 2, prev: null },
     });
     const wrapper = mountList();
-    const [prevBtn] = wrapper.findAll("button");
+    const [prevBtn] = wrapper.findAll('[data-testid="pagination"] button');
     expect(prevBtn.attributes("disabled")).toBeDefined();
+  });
+
+  it("calls deleteNote when the trash button is clicked", async () => {
+    const deleteNote = vi.fn();
+    mockStore({
+      notes: [{ id: 7, title: "To delete", content: null, created_at: "" }],
+      pagination: { ...basePagination, count: 1 },
+      deleteNote,
+    });
+    const wrapper = mountList();
+    await wrapper.find('[aria-label="Excluir anotação"]').trigger("click");
+    expect(deleteNote).toHaveBeenCalledWith(7);
   });
 });

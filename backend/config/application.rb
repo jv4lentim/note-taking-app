@@ -42,7 +42,7 @@ module Backend
     config.api_only = true
 
     config.i18n.default_locale = :"pt-BR"
-    config.i18n.available_locales = [:"pt-BR"]
+    config.i18n.available_locales = [ :"pt-BR" ]
 
     config.action_dispatch.default_headers = {
       "X-Frame-Options" => "DENY",
