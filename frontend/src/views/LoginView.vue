@@ -45,54 +45,58 @@ async function handleSubmit() {
 
 <template>
   <AuthLayout :heading="t('auth.login')">
-    <form class="form" novalidate @submit.prevent="handleSubmit">
-      <div class="field">
-        <label class="label" for="email">{{ t("auth.email") }}:</label>
-        <div class="input-wrap">
+    <form class="flex flex-col gap-4" novalidate @submit.prevent="handleSubmit">
+      <div class="grid grid-cols-[90px_1fr] items-start gap-2">
+        <label class="text-base text-gray-700 pt-2" for="email">{{ t("auth.email") }}:</label>
+        <div class="flex flex-col gap-1">
           <input
             id="email"
             v-model="email"
-            class="input"
-            :class="{ 'input--error': emailError }"
+            class="w-full py-2 px-3 border border-gray-300 rounded text-base text-slate-800 bg-white placeholder:text-gray-400"
+            :class="{ 'border-red-500': emailError }"
             type="email"
             maxlength="255"
             autocomplete="email"
             :placeholder="t('auth.emailPlaceholder')"
           />
-          <span v-if="emailError" class="field-error">{{ emailError }}</span>
+          <span v-if="emailError" class="text-xs text-red-500">{{ emailError }}</span>
         </div>
       </div>
 
-      <div class="field">
-        <label class="label" for="password">{{ t("auth.password") }}:</label>
-        <div class="input-wrap">
+      <div class="grid grid-cols-[90px_1fr] items-start gap-2">
+        <label class="text-base text-gray-700 pt-2" for="password">{{ t("auth.password") }}:</label>
+        <div class="flex flex-col gap-1">
           <input
             id="password"
             v-model="password"
-            class="input"
-            :class="{ 'input--error': passwordError }"
+            class="w-full py-2 px-3 border border-gray-300 rounded text-base text-slate-800 bg-white placeholder:text-gray-400"
+            :class="{ 'border-red-500': passwordError }"
             type="password"
             minlength="8"
             maxlength="128"
             autocomplete="current-password"
             :placeholder="t('auth.passwordPlaceholder')"
           />
-          <span v-if="passwordError" class="field-error">{{ passwordError }}</span>
+          <span v-if="passwordError" class="text-xs text-red-500">{{ passwordError }}</span>
         </div>
       </div>
 
-      <div class="actions">
-        <button class="btn-primary" type="submit" :disabled="isLoading">
+      <div class="flex justify-center mt-2">
+        <button
+          class="bg-primary text-white font-bold text-base py-2.5 px-10 border-0 rounded cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed"
+          type="submit"
+          :disabled="isLoading"
+        >
           {{ isLoading ? t("auth.loading") : t("auth.login") }}
         </button>
       </div>
 
-      <p v-if="errorMessage" class="form-error">{{ errorMessage }}</p>
+      <p v-if="errorMessage" class="text-center text-red-500 text-sm m-0">{{ errorMessage }}</p>
     </form>
 
-    <p class="alt-link">
+    <p class="mt-6 text-sm text-gray-700">
       {{ t("auth.noAccount") }}
-      <router-link :to="{ name: 'register' }">{{ t("auth.register") }}</router-link>
+      <router-link class="text-primary no-underline" :to="{ name: 'register' }">{{ t("auth.register") }}</router-link>
     </p>
   </AuthLayout>
 </template>

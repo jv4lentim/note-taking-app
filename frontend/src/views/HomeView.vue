@@ -16,59 +16,20 @@ async function handleLogout() {
 </script>
 
 <template>
-  <div class="page">
-    <div class="container">
-      <div class="top-bar">
-        <span class="user-email">{{ auth.user?.email }}</span>
-        <button class="btn-logout" @click="handleLogout">{{ t("auth.logout") }}</button>
+  <div class="min-h-screen bg-white flex justify-center px-6 py-12">
+    <div class="w-full max-w-[720px]">
+      <div class="flex justify-end items-center gap-4 mb-8">
+        <span class="text-sm text-gray-500">{{ auth.user?.email }}</span>
+        <button
+          class="bg-transparent border border-gray-300 rounded py-1.5 px-4 text-sm text-gray-700 cursor-pointer"
+          @click="handleLogout"
+        >
+          {{ t("auth.logout") }}
+        </button>
       </div>
       <NoteForm />
-      <hr class="divider" />
+      <hr class="border-0 border-t border-gray-300 my-8" />
       <NoteList />
     </div>
   </div>
 </template>
-
-<style scoped>
-.page {
-  min-height: 100vh;
-  background: #ffffff;
-  display: flex;
-  justify-content: center;
-  padding: 3rem 1.5rem;
-}
-
-.container {
-  width: 100%;
-  max-width: 720px;
-}
-
-.top-bar {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  gap: 1rem;
-  margin-bottom: 2rem;
-}
-
-.user-email {
-  font-size: 0.9rem;
-  color: #6b7280;
-}
-
-.btn-logout {
-  background: transparent;
-  border: 1px solid #d1d5db;
-  border-radius: 4px;
-  padding: 0.375rem 1rem;
-  font-size: 0.9rem;
-  color: #374151;
-  cursor: pointer;
-}
-
-.divider {
-  border: none;
-  border-top: 1px solid #d1d5db;
-  margin: 2rem 0;
-}
-</style>

@@ -52,132 +52,49 @@ async function handleSubmit() {
 
 <template>
   <section>
-    <h2 class="section-title">{{ t("notes.sectionTitle") }}</h2>
-    <form class="note-form" novalidate @submit.prevent="handleSubmit">
-      <div class="field-row">
-        <label for="note-title">{{ t("notes.titleLabel") }}</label>
-        <div class="field-wrapper">
+    <h2 class="text-xl font-bold text-slate-800 mb-6">{{ t("notes.sectionTitle") }}</h2>
+    <form class="flex flex-col gap-4" novalidate @submit.prevent="handleSubmit">
+      <div class="grid grid-cols-[90px_1fr] items-start gap-2">
+        <label class="text-base text-gray-700 pt-2" for="note-title">{{ t("notes.titleLabel") }}</label>
+        <div class="flex flex-col gap-1">
           <input
             id="note-title"
             v-model="title"
             type="text"
-            :class="{ 'input--error': fieldErrors.title }"
+            class="w-full py-2 px-3 border border-gray-300 rounded text-base text-gray-700 bg-white placeholder:text-gray-400 resize-y"
+            :class="{ 'border-red-600': fieldErrors.title }"
             :placeholder="t('notes.titlePlaceholder')"
             :maxlength="TITLE_MAX"
             autocomplete="off"
           />
-          <span v-if="fieldErrors.title" class="field-error">{{ fieldErrors.title }}</span>
+          <span v-if="fieldErrors.title" class="text-sm text-red-600">{{ fieldErrors.title }}</span>
         </div>
       </div>
-      <div class="field-row">
-        <label for="note-content">{{ t("notes.contentLabel") }}</label>
-        <div class="field-wrapper">
+      <div class="grid grid-cols-[90px_1fr] items-start gap-2">
+        <label class="text-base text-gray-700 pt-2" for="note-content">{{ t("notes.contentLabel") }}</label>
+        <div class="flex flex-col gap-1">
           <textarea
             id="note-content"
             v-model="content"
-            :class="{ 'input--error': fieldErrors.content }"
+            class="w-full py-2 px-3 border border-gray-300 rounded text-base text-gray-700 bg-white placeholder:text-gray-400 resize-y"
+            :class="{ 'border-red-600': fieldErrors.content }"
             :placeholder="t('notes.contentPlaceholder')"
             :maxlength="CONTENT_MAX"
             rows="5"
           />
-          <span v-if="fieldErrors.content" class="field-error">{{ fieldErrors.content }}</span>
+          <span v-if="fieldErrors.content" class="text-sm text-red-600">{{ fieldErrors.content }}</span>
         </div>
       </div>
-      <span v-if="submitError" class="submit-error">{{ submitError }}</span>
-      <div class="btn-row">
-        <button type="submit" class="btn-primary" :disabled="submitting">
+      <span v-if="submitError" class="text-sm text-red-600 text-center">{{ submitError }}</span>
+      <div class="flex justify-center">
+        <button
+          type="submit"
+          class="bg-primary text-white font-bold border-0 rounded py-2.5 px-10 text-base cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed"
+          :disabled="submitting"
+        >
           {{ submitting ? t("notes.saving") : t("notes.save") }}
         </button>
       </div>
     </form>
   </section>
 </template>
-
-<style scoped>
-.section-title {
-  font-size: 1.375rem;
-  font-weight: 700;
-  color: #1e293b;
-  margin: 0 0 1.5rem;
-}
-
-.note-form {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-
-.field-row {
-  display: grid;
-  grid-template-columns: 90px 1fr;
-  align-items: start;
-  gap: 0.5rem;
-}
-
-.field-row label {
-  font-size: 1rem;
-  color: #374151;
-  padding-top: 0.5rem;
-}
-
-.field-wrapper {
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
-}
-
-input,
-textarea {
-  width: 100%;
-  border: 1px solid #d1d5db;
-  border-radius: 4px;
-  padding: 0.5rem 0.75rem;
-  font-size: 0.9375rem;
-  color: #374151;
-  background: #ffffff;
-  font-family: inherit;
-  box-sizing: border-box;
-  resize: vertical;
-}
-
-input::placeholder,
-textarea::placeholder {
-  color: #9ca3af;
-}
-
-.input--error {
-  border-color: #dc2626;
-}
-
-.field-error {
-  font-size: 0.875rem;
-  color: #dc2626;
-}
-
-.submit-error {
-  font-size: 0.875rem;
-  color: #dc2626;
-  text-align: center;
-}
-
-.btn-row {
-  display: flex;
-  justify-content: center;
-}
-
-.btn-primary {
-  background: #3b6fd4;
-  color: #ffffff;
-  font-weight: 700;
-  border: none;
-  border-radius: 4px;
-  padding: 0.625rem 2.5rem;
-  font-size: 0.9375rem;
-  cursor: pointer;
-}
-
-.btn-primary:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-}
-</style>
