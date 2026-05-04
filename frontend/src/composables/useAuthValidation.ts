@@ -21,12 +21,12 @@ export function useAuthValidation() {
     return true;
   }
 
-  function validatePassword(value: string): boolean {
+  function validatePassword(value: string, checkMinLength = true): boolean {
     if (!value) {
       passwordError.value = t("auth.errors.passwordRequired");
       return false;
     }
-    if (value.length < 8) {
+    if (checkMinLength && value.length < 8) {
       passwordError.value = t("auth.errors.passwordMin");
       return false;
     }

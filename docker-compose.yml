@@ -5,6 +5,7 @@ services:
       - "3000:80"
     environment:
       SECRET_KEY_BASE: 1c7795337b597afa635c23fd1e97f819e4779ed61264d44271fca149acea052b970f3bf7ebcdc4ad311c449840a9648bc6c22aac8403c85e8766b989da58bb64
+      DEVISE_JWT_SECRET_KEY: 07e7e44f61d44a8f3ed1436038c646fabf2a262689603b2a2d15afe9fd5b7df04aea53700c80ca7b22e5a556fc3ff9e54095f459cc9f655198d40770b3ff2d8e
     volumes:
       - backend_storage:/rails/storage
 

@@ -19,7 +19,7 @@ const isLoading = ref(false);
 
 function validate(): boolean {
   const emailOk = validateEmail(email.value);
-  const passwordOk = validatePassword(password.value);
+  const passwordOk = validatePassword(password.value, false);
   return emailOk && passwordOk;
 }
 
@@ -72,7 +72,6 @@ async function handleSubmit() {
             class="w-full py-2 px-3 border border-gray-300 rounded text-base text-slate-800 bg-white placeholder:text-gray-400"
             :class="{ 'border-red-500': passwordError }"
             type="password"
-            minlength="8"
             maxlength="128"
             autocomplete="current-password"
             :placeholder="t('auth.passwordPlaceholder')"
