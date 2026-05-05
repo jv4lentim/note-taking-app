@@ -52,7 +52,7 @@ O frontend já aponta para `http://localhost:3000` por padrão. Se precisar muda
 ```bash
 # backend
 cd backend
-bin/rails test           # testes
+bundle exec rspec        # testes
 bin/rubocop              # linting
 bin/brakeman --no-pager  # análise de segurança estática
 bin/bundler-audit        # CVEs nas gems
